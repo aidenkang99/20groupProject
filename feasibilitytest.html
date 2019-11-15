@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+<TITLE>Program that uses WebGazer.js</TITLE>
+
+<script src="./webgazer.js"></script>
+
+<script>
+
+/*
+ * Feasibility test that uses WebGazer.js
+ *
+ * Based on https://webgazer.cs.brown.edu/demo.html by Jeff Huang
+ *
+ * Must run on a remote server, and access via https not http. 
+ * Must download webgazer.js from http://webgazer.cs.brown.edu and put it where above 'script src=' statement will find it. 
+ * Currently works on Chrome, but not on Safari. 
+ * Can ignore alert box that complains about webGL. 
+ */
+
+ //TODO inLeft, inRight
+ function inLeft(data) {
+ 	return data && data.x > 0 && data.x < (window.innerWidth/2 - 5) && data.y > 300 && data.y < 300+100
+ }
+ function inRight(data) { 
+ 	return data && data.x < window.innerWidth && data.x > (window.innerWidth/2 - 5) && data.y > 300 && data.y < 300+100
+ }
+
+ //TODO (future) include a sound? like the beep() thing is cool
+
+ /*
+ * Called whenever we get new gaze data
+ * data = object containing an x and y key which are the x and y prediction coordinates (no bounds limiting)
+ * clock = elapsed time in milliseconds since webgazer.begin() was called
+ */
+var lastHit = 0
+function gaze (data, clock) { 
+    const delay = 400 // ms
+
+    var lefty = document.getElementById("lefty")
+    var righty = document.getElementById("righty")
+
+    //TODO: this is where the inLeft/inRight stuff will go
+    if (inLeft (data)) { 
+    	righty.style.background = "white"
+		lefty.style.background = "green"
+
+		lastHit = clock 
+    }
+    else if (inRight (data)) { 
+    	lefty.style.background = "white"
+		righty.style.background = "blue"
+
+		lastHit = clock 
+    }
+    else {
+    	if (clock-lastHit > delay) {
+    		lefty.style.background = "white"
+    		righty.style.background = "white"
+    	}
+    }
+}
+
+window.onload = function() {
+    webgazer.setRegression('ridge') /* currently must set regression and tracker */ 
+        .setTracker('clmtrackr') 
+        .setGazeListener(gaze) 
+        .begin() 
+        .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */ 
+
+    var width = 320;
+    var height = 240;
+    var topDist = '0px';
+    var leftDist = '0px';
+    
+    var setup = function() {
+        var video = document.getElementById('webgazerVideoFeed');
+        video.style.display = 'block';
+        video.style.position = 'absolute';
+        video.style.top = topDist;
+        video.style.left = leftDist;
+        video.width = width;
+        video.height = height;
+        video.style.margin = '0px';
+
+        webgazer.params.imgWidth = width;
+        webgazer.params.imgHeight = height;
+
+        var overlay = document.createElement('canvas');
+        overlay.id = 'overlay';
+        overlay.style.position = 'absolute';
+        overlay.width = width;
+        overlay.height = height;
+        overlay.style.top = topDist;
+        overlay.style.left = leftDist;
+        overlay.style.margin = '0px';
+
+        document.body.appendChild(overlay);
+
+        var cl = webgazer.getTracker().clm;
+
+        function drawLoop() {
+            requestAnimFrame(drawLoop);
+            overlay.getContext('2d').clearRect(0,0,width,height);
+            if (cl.getCurrentPosition()) {
+                cl.draw(overlay);
+            }
+        }
+        drawLoop();
+    };
+
+    // Busy loop until ready
+    function checkIfReady() {
+        if (webgazer.isReady()) {
+            setup();
+            //TODO: I don't like that we still have to adjust this empirically. We may have to change this eventually
+            var lefty = document.getElementById("lefty");
+            lefty.style.width = window.innerWidth/2 - 5;
+            var righty = document.getElementById("righty");
+            righty.style.width = window.innerWidth/2 - 5;
+        } else {
+            setTimeout(checkIfReady, 100);
+        }
+    }
+    setTimeout(checkIfReady,100);
+};
+</script>
+</heaD>
+
+<BODY LANG="en-US" LINK="#0000ff" DIR="LTR">
+    <div>
+        <h1 style="color:#C0C0C0" align="center">
+        	Welcome to our feasibility test!<br>
+        	To calibrate, click in various places on the screen<br>
+        	while looking directly at the cursor.<br>
+        	We hope you enjoy :)
+        </h1>
+    </div>
+
+    <div id="lefty" style="position:absolute; border-style:solid; border-color:green; left:0px; top:300px; height:100px; width:0px">
+	<h2>Leftyloo</h2>
+    </div>
+
+    <div id="righty" style="position:absolute; border-style:solid; border-color:blue; right:0px; top:300px; height:100px; width:0px">
+	<h2>Rightytighty</h2>
+    </div>
+</BODY>
+</HTML>
+
