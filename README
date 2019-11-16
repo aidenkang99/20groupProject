@@ -21,6 +21,16 @@ Program Explanation:
     It would make the interactions with the system much easier.
 
 
+Feasibility Test:
+
+    Our program changes the colors of left/right grid based on user's gaze.
+    We tried to show that we know how to use webgazer to detect user's movements
+    on screen and can associate that event with changes in the website.
+
+Link to the Interactive XD Prototype:
+
+    https://xd.adobe.com/view/336be162-e462-4a4c-672a-048c6bc6f2c7-455a/
+
 Technology Requirement/Risks:
 
     We are using webgazer.js for our project, as well as Javascript, HTML, and CSS.
@@ -33,6 +43,11 @@ Technology Requirement/Risks:
     the user’s “gaze” might end up in quadrants they didn’t intend. We want near
     100% accuracy, so it will take some testing to ensure the program’s
     user-friendly.
+
+    It seems to be that lighting is very important when the API tries to compute
+    the location of user's gaze. So if you feel like the result is not accurate,
+    try to change the lighting or switch the position of your laptop.
+    Then, instantly, the result often becomes more accurate.
 
     Aiden and Mikayla have prior experience with Javascript, HTML, and CSS from COMP
     20 projects; Jolie, however, is new to these languages and is excited to embrace
