@@ -1,3 +1,9 @@
+<!--
+    Programmer: Jolie Davidson, Aiden Kang, Mikayla Clark
+    Date: 15 Nov, 2019
+    File: Feasibility test that uses WebGazer.js
+-->
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -7,9 +13,7 @@
 <script src="./webgazer.js"></script>
 
 <script>
-
 /*
- * Feasibility test that uses WebGazer.js
  *
  * Based on https://webgazer.cs.brown.edu/demo.html by Jeff Huang
  *
@@ -18,17 +22,14 @@
  * Currently works on Chrome, but not on Safari. 
  * Can ignore alert box that complains about webGL. 
  */
-
  //TODO inLeft, inRight
  function inLeft(data) {
- 	return data && data.x > 0 && data.x < (window.innerWidth/2 - 5) && data.y > 300 && data.y < 300+100
+ 	return data && data.x > 0 && data.x < (window.innerWidth/2 - 5) && data.y > 300 && data.y < 300+400
  }
  function inRight(data) { 
- 	return data && data.x < window.innerWidth && data.x > (window.innerWidth/2 - 5) && data.y > 300 && data.y < 300+100
+ 	return data && data.x < window.innerWidth && data.x > (window.innerWidth/2 - 5) && data.y > 300 && data.y < 300+400
  }
-
  //TODO (future) include a sound? like the beep() thing is cool
-
  /*
  * Called whenever we get new gaze data
  * data = object containing an x and y key which are the x and y prediction coordinates (no bounds limiting)
@@ -37,21 +38,17 @@
 var lastHit = 0
 function gaze (data, clock) { 
     const delay = 400 // ms
-
     var lefty = document.getElementById("lefty")
     var righty = document.getElementById("righty")
-
     //TODO: this is where the inLeft/inRight stuff will go
     if (inLeft (data)) { 
     	righty.style.background = "white"
 		lefty.style.background = "green"
-
 		lastHit = clock 
     }
     else if (inRight (data)) { 
     	lefty.style.background = "white"
 		righty.style.background = "blue"
-
 		lastHit = clock 
     }
     else {
@@ -61,14 +58,12 @@ function gaze (data, clock) {
     	}
     }
 }
-
 window.onload = function() {
     webgazer.setRegression('ridge') /* currently must set regression and tracker */ 
         .setTracker('clmtrackr') 
         .setGazeListener(gaze) 
         .begin() 
         .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */ 
-
     var width = 320;
     var height = 240;
     var topDist = '0px';
@@ -83,10 +78,8 @@ window.onload = function() {
         video.width = width;
         video.height = height;
         video.style.margin = '0px';
-
         webgazer.params.imgWidth = width;
         webgazer.params.imgHeight = height;
-
         var overlay = document.createElement('canvas');
         overlay.id = 'overlay';
         overlay.style.position = 'absolute';
@@ -95,11 +88,8 @@ window.onload = function() {
         overlay.style.top = topDist;
         overlay.style.left = leftDist;
         overlay.style.margin = '0px';
-
         document.body.appendChild(overlay);
-
         var cl = webgazer.getTracker().clm;
-
         function drawLoop() {
             requestAnimFrame(drawLoop);
             overlay.getContext('2d').clearRect(0,0,width,height);
@@ -109,7 +99,6 @@ window.onload = function() {
         }
         drawLoop();
     };
-
     // Busy loop until ready
     function checkIfReady() {
         if (webgazer.isReady()) {
@@ -138,13 +127,12 @@ window.onload = function() {
         </h1>
     </div>
 
-    <div id="lefty" style="position:absolute; border-style:solid; border-color:green; left:0px; top:300px; height:100px; width:0px">
+    <div id="lefty" style="position:absolute; border-style:solid; border-color:green; left:0px; top:300px; height:400px; width:0px">
 	<h2>Leftyloo</h2>
     </div>
 
-    <div id="righty" style="position:absolute; border-style:solid; border-color:blue; right:0px; top:300px; height:100px; width:0px">
+    <div id="righty" style="position:absolute; border-style:solid; border-color:blue; right:0px; top:300px; height:400px; width:0px">
 	<h2>Rightytighty</h2>
     </div>
 </BODY>
 </HTML>
-
