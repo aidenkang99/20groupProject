@@ -1,0 +1,124 @@
+<!answersquares.html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+<TITLE>Testytest!</TITLE>
+<style>
+	.square{
+		position: absolute;
+		font-family:Arial Black;
+		color:white;
+		text-align:center;
+		font-size:60;
+		border-color:white;
+		border-style:solid;
+		border-width:10px;
+		height:47.25%;
+		width:48.58%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.inside{
+		display: inline-block;
+		vertical-align: middle;
+	}
+</style>
+<script>
+var questionsList;
+var squares;
+
+window.onload = function() {
+
+questionsList = [];
+questionsList[0] = new Question("X", "I'm right!", "I'm not right.", "I'm not right.", "I'm not right.", 0);
+questionsList[1] = new Question("X", "I'm not right.", "I'm right!",  "I'm not right.", "I'm not right.", 1);
+questionsList[2] = new Question("X", "I'm not right.", "I'm not right.", "I'm right!",  "I'm not right.", 2);
+questionsList[3] = new Question("X", "I'm not right.", "I'm not right.", "I'm not right.", "I'm right!", 3);
+
+squares = [];
+squares[0] = new Square(0, "TopLeft", "red");
+squares[1] = new Square(1, "TopRight", "green");
+squares[2] = new Square(2, "BottomLeft", "blue");
+squares[3] = new Square(3, "BottomRight", "orange");
+
+setUpLevel(0, squares, questionsList);
+}
+
+function setUpLevel(level, squares, questionsList) {
+	for (var i = 0; i < 4; i++) {
+		
+		var para = document.createElement("div");
+		para.id = "inside" + i;
+		para.classList.add("inside");
+		para.innerHTML = questionsList[level].getAnswer(i);
+		var element = document.getElementById(squares[i].getDivId());
+		element.appendChild(para);
+		/*
+		document.getElementById(squares[i].getDivId()).innerHTML = questionsList[level].getAnswer(i);
+		*/
+		document.getElementById(squares[questionsList[level].getCorrectId()].getDivId()).style.borderColor = "black";
+	}
+}
+
+class Question {
+	constructor(q, a1, a2, a3, a4, ca) {
+		this.quest = q; //question string
+		this.answers = []; //array of answer strings
+		this.answers = [a1, a2, a3, a4];
+		this.correctInd = ca; //index of correct answer
+	}
+	getQuestion() {
+		return this.quest;
+	}
+	getAnswer(index) {
+		return this.answers[index];
+	}
+	getCorrectId() {
+		return this.correctInd;
+	}
+	isCorrect(index) {
+		if (index == this.correctInd) {return true;}
+		else {return false;}
+	}
+}
+
+class Square {
+	constructor(i, divId, color) {
+		this.index = i;
+		this.divId = divId;
+		this.originalColor = color;
+		this.currentColor = color;
+	}
+	getIndex() {
+		return i;
+	}
+	getDivId() {
+		return this.divId;
+	}
+	changeColor(color) {
+		this.currentColor = color;
+	}
+	resetColor() {
+		this.currentColor = this.originalColor;
+	}
+}
+
+</script>
+</heaD>
+
+<BODY LANG="en-US" LINK="#0000ff" DIR="LTR">
+	<div class="square" id = "TopLeft" style="background-color:red; left:0px; top:0px;">
+		<div id="inside0"></div>
+	</div>
+	<div class="square" id = "TopRight" style="background-color:green; right:0px; top:0px;">
+		<div id="inside1"></div>
+	</div>
+	<div class="square" id = "BottomLeft" style="background-color:blue; left:0px; bottom:0px;">
+	</div>
+	<div class="square" id = "BottomRight" style="background-color:orange; right:0px; bottom:0px;">
+	</div>
+</BODY>
+</HTML>
+
