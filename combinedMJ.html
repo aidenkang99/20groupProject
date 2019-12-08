@@ -1,4 +1,4 @@
-<!combinedMJ.html>
+<!--combinedMJ.html-->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -34,39 +34,42 @@
 		font-family:Arial Black;
 		color:black;
 		text-align:center;
-		font-size:60;
+		font-size:40;
 	}
 
 </style>
 <script type="text/javascript">
-	//TODO: change this
+	//TODO: add gameplay
 	window.onload = function() {
 		var gs = new GameScreen();
+		gs.breakTime();
+		gs.thinkyTime();
+		gs.selectyTime();
+		gs.responseTime();
 	}
-
-	
 
 	class GameScreen {
 		constructor() {
 			this.level = -1;
-			this.answer; //INTEGER!!!
+			this.answer = 0; //INTEGER!!!
 
-			this.questionsList[0] = new Question(“What is 2019’s top song?”,
-				“bad guy”, “Señorita”, “Old Town Road”, “Sunflower”, 1);
-			this.questionsList[1] = new Question(“What is 2019’s most streamed artist?”,
-				“Post Malone”, “Billie Eilish”, “Ariana Grande”, “Drake”, 1);
-			this.questionsList[2] = new Question(“What is the most popular SUV purchased in 2019?”,
-				“Jeep Wrangler”, “Ford Escape”, “Nissan Rogue”, “Toyota Highlander”, 2);
-			this.questionsList[3] = new Question(“What is the most watched Netflix show of 2019?”,
-				“Lucifer”, “Stranger Things”, “Black Mirror”, “13 Reasons Why”, 1);
-			this.questionsList[4] = new Question(“What is the most widely used programming language of 2019?”,
-				“Python”, “Java”, “JavaScript”, “Ruby”, 2);
-			this.questionsList[5] = new Question(“What is the most used social networking app of 2019?”,
-				“Twitter”, “Instagram”, “Facebook”, “Snapchat”, 2);
-			this.questionsList[6] = new Question(“What is the most populated country as of 2019?”,
-				“India”, “US”, “Brazil”, “China”, 3);
-			this.questionsList[7] = new Question(“What is the most populated US city as of 2019?”,
-				“New York, New York”, “Houston, TX”, “Chicago, IL”, “Los Angeles, CA”, 0);
+			this.questionsList = [];
+			this.questionsList[0] = new Question("What is 2019’s top song?",
+				"bad guy", "Señorita", "Old Town Road", "Sunflower", 1);
+			this.questionsList[1] = new Question("What is 2019’s most streamed artist?",
+				"Post Malone", "Billie Eilish", "Ariana Grande", "Drake", 1);
+			this.questionsList[2] = new Question("What is the most popular SUV purchased in 2019?",
+				"Jeep Wrangler", "Ford Escape", "Nissan Rogue", "Toyota Highlander", 2);
+			this.questionsList[3] = new Question("What is the most watched Netflix show of 2019?",
+				"Lucifer", "Stranger Things", "Black Mirror", "13 Reasons Why", 1);
+			this.questionsList[4] = new Question("What is the most widely used programming language of 2019?",
+				"Python", "Java", "JavaScript", "Ruby", 2);
+			this.questionsList[5] = new Question("What is the most used social networking app of 2019?",
+				"Twitter", "Instagram", "Facebook", "Snapchat", 2);
+			this.questionsList[6] = new Question("What is the most populated country as of 2019?",
+				"India", "US", "Brazil", "China", 3);
+			this.questionsList[7] = new Question("What is the most populated US city as of 2019?",
+				"New York, New York", "Houston, TX", "Chicago, IL", "Los Angeles, CA", 0);
 
 
 			this.squares = [];
@@ -75,7 +78,7 @@
 			this.squares[2] = new Square(2, "BottomLeft", "0066F0", "88B4EF");
 			this.squares[3] = new Square(3, "BottomRight", "FFAA00", "FFDB92");
 
-			//this.messageBar = new MessageBar(); TODO
+			this.messageBar = new MessageBar();
 		}
 
 		//actual screen display stuff
@@ -83,64 +86,91 @@
 			this.level++;
 			document.getElementById("questionbar").innerHTML = "";
 			this.dimSquares();
-			//this.messageBar.breakTime(this.level); TODO ("Level __+1 up next, take an eye break!")
+			this.messageBar.breakTime(this.level);
 		}
 		thinkyTime() {
 			this.brightenSquares();
-			this.setUpLevel(level);
-			//this.messageBar.thinkyTime(); TODO: 7 seconds
+			this.setUpLevel(this.level);
+			this.messageBar.thinkyTime();
 		}
 		selectyTime() {
-			this.answer = this.computePick(); //TODO: 4 seconds ANSWER IS AN INTEGER
+			this.messageBar.selectyTime();
+			this.answer = this.computePick();
 		}
 		responseTime() {
-			this.dimFalse();
-			if (this.questionsList[level].isCorrect(this.answer)) {
-				//this.messageBar.correctAnswer(); TODO
+			if (this.questionsList[this.level].isCorrect(this.answer)) {
+				this.messageBar.correctAnswer();
 			}
 			else {
-				//this.messageBar.falseAnswer(); TODO
+				this.messageBar.falseAnswer();
 			}
 		}
 		endScreen() {
 			this.dimSquares();
 			document.getElementById("questionbar").innerHTML = "";
-			//this.messageBar.endGame(); TODO
+			this.messageBar.endGame();
 		}
 
-		computePick() {} //TODO
+		computePick() {return 0;} //TODO (right now it just returns 0) (4 seconds, ANSWER IS AN INTEGER)
 		dimSquares() {
 			for (var i = 0; i < 4; i++) {
-				this.squares[i].dimColor();
+				this.squares[i].dim();
 			}
 		}
 		dimFalse() {
+			alert("user answer: " + this.answer);
 			for (var i = 0; i < 4; i++) {
-				if (!this.squares[i].isCorrect()) {
-					this.squares[i].dimColor();
+				if (i != this.questionsList[this.level].getCorrectAnswer()) {
+					this.squares[i].dim();
 				}
 			}
 		}
 		brightenSquares() {
 			for (var i = 0; i < 4; i++) {
-				this.squares[i].originalColor();
+				this.squares[i].brighten();
 			}
 		}
 
 		setUpLevel() {
 			for (var i = 0; i < 4; i++) {
-				this.squares[i].originalColor();
+				this.squares[i].brighten();
 
-				document.getElementById("questionbar").innerHTML = this.questionsList[level].getQuestion();
+				document.getElementById("questionbar").innerHTML = this.questionsList[this.level].getQuestion();
 
 				var para = document.createElement("div");
 				para.id = "inside" + i;
 				para.classList.add("inside");
-				para.innerHTML = this.questionsList[level].getAnswer(i);
+				para.innerHTML = this.questionsList[this.level].getAnswer(i);
 				var element = document.getElementById(this.squares[i].getDivId());
 				element.appendChild(para);
 			}
 		}
+	}
+
+	class MessageBar {
+		constructor() {
+			this.id = "messagebar";
+		}
+
+		breakTime(level) {
+			document.getElementById(this.id).innerHTML = "Level " + (level + 1) + " is up next, relax your eyes :)";
+		}
+		thinkyTime() {
+			document.getElementById(this.id).innerHTML = "Decide which answer to vote on now! Your gaze isn't scored yet.";
+			//TODO: make this last for 7 seconds
+		}
+		selectyTime() {
+			document.getElementById(this.id).innerHTML = "Pick your vote by staring at a box. Don't move your eyes."
+		}
+		correctAnswer() {
+			document.getElementById(this.id).innerHTML = "Wahoo! Correct answer!"
+		}
+		falseAnswer() {
+			document.getElementById(this.id).innerHTML = "Ah rats, wrong answer :(";
+		}
+		endGame() {
+			document.getElementById(this.id).innerHTML = "Game over! Thanks for playing :)";
+		} //TODO
 	}
 
 	class Question {
@@ -156,10 +186,14 @@
 		getAnswer(index) {
 			return this.answers[index];
 		}
+		getCorrecAnswer() {
+			return this.answers[this.ca];
+		}
 		getCorrectId() {
 			return this.correctInd;
 		}
 		isCorrect(index) {
+			alert("index: " + index + " correct index: " + this.correctInd);
 			if (index == this.correctInd) {return true;}
 			else {return false;}
 		}
@@ -178,10 +212,10 @@
 		getDivId() {
 			return this.divId;
 		}
-		dimColor() {
+		dim() {
 			document.getElementById(this.divId).style.backgroundColor = this.dimColor;
 		}
-		originalColor() {
+		brighten() {
 			document.getElementById(this.divId).style.backgroundColor = this.originalColor;
 		}
 	}
