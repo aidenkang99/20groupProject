@@ -98,6 +98,7 @@
 			this.answer = this.computePick();
 		}
 		responseTime() {
+			this.dimFalse();
 			if (this.questionsList[this.level].isCorrect(this.answer)) {
 				this.messageBar.correctAnswer();
 			}
@@ -118,7 +119,7 @@
 			}
 		}
 		dimFalse() {
-			alert("user answer: " + this.answer);
+			alert("user answer: " + this.answer + ", getCorrectAnswer()" + this.questionsList[this.level].getCorrectAnswer());
 			for (var i = 0; i < 4; i++) {
 				if (i != this.questionsList[this.level].getCorrectAnswer()) {
 					this.squares[i].dim();
@@ -186,14 +187,13 @@
 		getAnswer(index) {
 			return this.answers[index];
 		}
-		getCorrecAnswer() {
-			return this.answers[this.ca];
+		getCorrectAnswer() {
+			return this.correctInd;
 		}
 		getCorrectId() {
 			return this.correctInd;
 		}
 		isCorrect(index) {
-			alert("index: " + index + " correct index: " + this.correctInd);
 			if (index == this.correctInd) {return true;}
 			else {return false;}
 		}
