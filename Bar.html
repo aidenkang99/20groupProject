@@ -1,0 +1,92 @@
+<!-- Aiden Kang, Jolie Davidson, Mikayla Clark
+  -- Assignment 11
+  -- December 7, 2019
+  -- This file .... -->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Messages Program</title>
+
+	<script type="text/javascript">
+    
+    var winningMsg = "Wahoo! Correct Answer!";
+    var losingMsg = "Wrong Answer!";
+
+    int score = 0;
+
+       class Questions {
+       	constructor(q) {
+       		this.question = q;
+       	}
+
+       	callback() {
+       		var canvas = document.getElementById("questionbar");
+       		canvas.innerHTML = question;
+       	}
+       }
+
+       class Messages {
+       	constructor () {
+       		
+       	}
+
+       	callback() {
+       		var canvas = document.getElementById("messagebar");
+
+       		if (!correctAnswer) {
+       			canvas.innerHTML = losingMsg;
+       		} else {
+       			canvas.innerHTML = winningMsg;
+       		}
+       	}
+       }
+
+       class Timer {
+       	constructor () {
+
+       	}
+
+       	callback() {
+
+       	}
+       }
+
+       class ScoreBoard {
+       	constructor () {
+
+       	}
+
+       	callback() {
+
+       	}
+       }
+
+       window.onload = function () {
+         new Questions ("What is COMP86?");
+         new Messages ();
+         new Timer ();
+         new ScoreBoard ();
+       }
+
+    </script>
+</head>
+
+<body>
+	
+	<div id="questionbar">
+		<p></p>
+	</div>
+
+    <div id="buttonarea">
+    </div>
+
+	<div id="messagebar">
+		<p>Choose an answer...</p>
+	</div>
+
+</body>
+</html>
