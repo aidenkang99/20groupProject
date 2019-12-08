@@ -41,61 +41,104 @@
 <script type="text/javascript">
 	//TODO: change this
 	window.onload = function() {
-
 		var gs = new GameScreen();
-		gs.setUpLevel(0);
-		gs.dimSquares(0);
 	}
 
 	
 
 	class GameScreen {
 		constructor() {
-			this.questionBar = new QuestionBar();
+			this.level = -1;
+			this.answer; //INTEGER!!!
 
-			//TODO: edit this
-			this.questionsList = [];
-			this.questionsList[0] = new Question("X", "I'm right!", "I'm not right.", "I'm not right.", "I'm not right.", 0);
-			this.questionsList[1] = new Question("X", "I'm not right.", "I'm right!",  "I'm not right.", "I'm not right.", 1);
-			this.questionsList[2] = new Question("X", "I'm not right.", "I'm not right.", "I'm right!",  "I'm not right.", 2);
-			this.questionsList[3] = new Question("X", "I'm not right.", "I'm not right.", "I'm not right.", "I'm right!", 3);
+			this.questionsList[0] = new Question(“What is 2019’s top song?”,
+				“bad guy”, “Señorita”, “Old Town Road”, “Sunflower”, 1);
+			this.questionsList[1] = new Question(“What is 2019’s most streamed artist?”,
+				“Post Malone”, “Billie Eilish”, “Ariana Grande”, “Drake”, 1);
+			this.questionsList[2] = new Question(“What is the most popular SUV purchased in 2019?”,
+				“Jeep Wrangler”, “Ford Escape”, “Nissan Rogue”, “Toyota Highlander”, 2);
+			this.questionsList[3] = new Question(“What is the most watched Netflix show of 2019?”,
+				“Lucifer”, “Stranger Things”, “Black Mirror”, “13 Reasons Why”, 1);
+			this.questionsList[4] = new Question(“What is the most widely used programming language of 2019?”,
+				“Python”, “Java”, “JavaScript”, “Ruby”, 2);
+			this.questionsList[5] = new Question(“What is the most used social networking app of 2019?”,
+				“Twitter”, “Instagram”, “Facebook”, “Snapchat”, 2);
+			this.questionsList[6] = new Question(“What is the most populated country as of 2019?”,
+				“India”, “US”, “Brazil”, “China”, 3);
+			this.questionsList[7] = new Question(“What is the most populated US city as of 2019?”,
+				“New York, New York”, “Houston, TX”, “Chicago, IL”, “Los Angeles, CA”, 0);
+
 
 			this.squares = [];
-			this.squares[0] = new Square(0, "TopLeft", "red");
-			this.squares[1] = new Square(1, "TopRight", "green");
-			this.squares[2] = new Square(2, "BottomLeft", "blue");
-			this.squares[3] = new Square(3, "BottomRight", "orange");
+			this.squares[0] = new Square(0, "TopLeft", "F00000", "E59595");
+			this.squares[1] = new Square(1, "TopRight", "00AA03", "78B079");
+			this.squares[2] = new Square(2, "BottomLeft", "0066F0", "88B4EF");
+			this.squares[3] = new Square(3, "BottomRight", "FFAA00", "FFDB92");
 
-			this.messageBar = new MessageBar();
+			//this.messageBar = new MessageBar(); TODO
 		}
 
 		//actual screen display stuff
-		levelTransition(level) {} //TODO: "Level __ up next, take an eye break!" rest of screen is blank
-		thinkyTime(level) {} //TODO: user looks at question and answers for 7 seconds
-		selectyTime(level) {} //TODO: user has 4 seconds to pick an answer
-		endScreen() {} //TODO: display score
+		breakTime() {
+			this.level++;
+			document.getElementById("questionbar").innerHTML = "";
+			this.dimSquares();
+			//this.messageBar.breakTime(this.level); TODO ("Level __+1 up next, take an eye break!")
+		}
+		thinkyTime() {
+			this.brightenSquares();
+			this.setUpLevel(level);
+			//this.messageBar.thinkyTime(); TODO: 7 seconds
+		}
+		selectyTime() {
+			this.answer = this.computePick(); //TODO: 4 seconds ANSWER IS AN INTEGER
+		}
+		responseTime() {
+			this.dimFalse();
+			if (this.questionsList[level].isCorrect(this.answer)) {
+				//this.messageBar.correctAnswer(); TODO
+			}
+			else {
+				//this.messageBar.falseAnswer(); TODO
+			}
+		}
+		endScreen() {
+			this.dimSquares();
+			document.getElementById("questionbar").innerHTML = "";
+			//this.messageBar.endGame(); TODO
+		}
 
-		computeScore() {} //TODO
+		computePick() {} //TODO
 		dimSquares() {
-			alert("we in dimSquares babey!")
-			this.squares[0].changeColor(E59595);
-		} //TODO
-		brightenSquares() {} //TODO
-
-		setUpLevel(level) {
-			alert("setUpLevel yay");
 			for (var i = 0; i < 4; i++) {
-				
+				this.squares[i].dimColor();
+			}
+		}
+		dimFalse() {
+			for (var i = 0; i < 4; i++) {
+				if (!this.squares[i].isCorrect()) {
+					this.squares[i].dimColor();
+				}
+			}
+		}
+		brightenSquares() {
+			for (var i = 0; i < 4; i++) {
+				this.squares[i].originalColor();
+			}
+		}
+
+		setUpLevel() {
+			for (var i = 0; i < 4; i++) {
+				this.squares[i].originalColor();
+
+				document.getElementById("questionbar").innerHTML = this.questionsList[level].getQuestion();
+
 				var para = document.createElement("div");
 				para.id = "inside" + i;
 				para.classList.add("inside");
 				para.innerHTML = this.questionsList[level].getAnswer(i);
 				var element = document.getElementById(this.squares[i].getDivId());
 				element.appendChild(para);
-				/*
-				document.getElementById(squares[i].getDivId()).innerHTML = questionsList[level].getAnswer(i);
-				*/
-				//document.getElementById(squares[questionsList[level].getCorrectId()].getDivId()).style.borderColor = "black";
 			}
 		}
 	}
@@ -123,11 +166,11 @@
 	}
 
 	class Square {
-		constructor(i, divId, color) {
+		constructor(i, divId, color, dimColor) {
 			this.index = i;
 			this.divId = divId;
 			this.originalColor = color;
-			this.currentColor = color;
+			this.dimColor = dimColor;
 		}
 		getIndex() {
 			return i;
@@ -135,13 +178,11 @@
 		getDivId() {
 			return this.divId;
 		}
-		changeColor(color) {
-			alert("we in changeColor babey!");
-			this.currentColor = color;
-			document.getElementById(this.divId).style.backgroundColor = "black";
+		dimColor() {
+			document.getElementById(this.divId).style.backgroundColor = this.dimColor;
 		}
-		resetColor() {
-			this.currentColor = this.originalColor;
+		originalColor() {
+			document.getElementById(this.divId).style.backgroundColor = this.originalColor;
 		}
 	}
 </script>
