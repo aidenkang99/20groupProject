@@ -51,7 +51,7 @@
 	class GameScreen {
 		constructor() {
 			this.level = -1;
-			this.answer = 0; //INTEGER!!!
+			this.vote = 0; //INTEGER!!!
 
 			this.questionsList = [];
 			this.questionsList[0] = new Question("What is 2019’s top song?",
@@ -94,12 +94,13 @@
 		}
 		selectyTime() {
 			this.messageBar.selectyTime();
-			this.answer = this.computePick();
+			this.vote = this.computeVote();
 		}
 		responseTime() {
 			this.dimFalse();
-			if (this.questionsList[this.level].isCorrect(this.answer)) {
+			if (this.questionsList[this.level].isCorrect(this.vote)) {
 				this.messageBar.correctAnswer();
+				this.messageBar.increaseScoreboard();
 			}
 			else {
 				this.messageBar.falseAnswer();
@@ -111,14 +112,14 @@
 			this.messageBar.endGame();
 		}
 
-		computePick() {return 0;} //TODO (right now it just returns 0) (4 seconds, ANSWER IS AN INTEGER)
+		computeVote() {return 0;} //TODO (right now it just returns 0) (4 seconds, VOTE IS AN INTEGER)
 		dimSquares() {
 			for (var i = 0; i < 4; i++) {
 				this.squares[i].dim();
 			}
 		}
 		dimFalse() {
-			alert("user answer: " + this.answer + ", getCorrectAnswer()" + this.questionsList[this.level].getCorrectAnswer());
+			alert("user answer: " + this.vote + ", getCorrectAnswer()" + this.questionsList[this.level].getCorrectAnswer());
 			for (var i = 0; i < 4; i++) {
 				if (i != this.questionsList[this.level].getCorrectAnswer()) {
 					this.squares[i].dim();
@@ -133,7 +134,7 @@
 
 		setUpLevel() {
 			document.getElementById("questionbar").innerHTML = this.questionsList[this.level].getQuestion();
-			
+
 			for (var i = 0; i < 4; i++) {
 				this.squares[i].brighten();
 
@@ -171,6 +172,7 @@
 		endGame() {
 			document.getElementById(this.id).innerHTML = "Game over! Thanks for playing :)";
 		} //TODO
+		increaseScoreboard() {}; //TODO
 	}
 
 	class Question {
