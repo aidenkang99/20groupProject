@@ -89,7 +89,6 @@
 			this.messageBar.breakTime(this.level);
 		}
 		thinkyTime() {
-			this.brightenSquares();
 			this.setUpLevel(this.level);
 			this.messageBar.thinkyTime();
 		}
@@ -133,10 +132,10 @@
 		}
 
 		setUpLevel() {
+			document.getElementById("questionbar").innerHTML = this.questionsList[this.level].getQuestion();
+			
 			for (var i = 0; i < 4; i++) {
 				this.squares[i].brighten();
-
-				document.getElementById("questionbar").innerHTML = this.questionsList[this.level].getQuestion();
 
 				var para = document.createElement("div");
 				para.id = "inside" + i;
