@@ -1,0 +1,167 @@
+<!combinedMJ.html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+<TITLE>Mikayla and Jolie WOO</TITLE>
+<style>
+	.square{
+		position:relative;
+		font-family:Arial Black;
+		color:white;
+		text-align:center;
+		font-size:60;
+		border-color:white;
+		border-style:solid;
+		border-width:10px;
+		height:47.25%;
+		width:48.58%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		float:left;
+	}
+	.inside{
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.bar{
+		border-color:white;border-style:solid; vertical-align:center;
+		width:99.5%;
+		height:18%;
+		font-family:Arial Black;
+		color:black;
+		text-align:center;
+		font-size:60;
+	}
+
+</style>
+<script type="text/javascript">
+	//TODO: change this
+	window.onload = function() {
+
+		var gs = new GameScreen();
+		gs.setUpLevel(0);
+		gs.dimSquares(0);
+	}
+
+	
+
+	class GameScreen {
+		constructor() {
+			this.questionBar = new QuestionBar();
+
+			//TODO: edit this
+			this.questionsList = [];
+			this.questionsList[0] = new Question("X", "I'm right!", "I'm not right.", "I'm not right.", "I'm not right.", 0);
+			this.questionsList[1] = new Question("X", "I'm not right.", "I'm right!",  "I'm not right.", "I'm not right.", 1);
+			this.questionsList[2] = new Question("X", "I'm not right.", "I'm not right.", "I'm right!",  "I'm not right.", 2);
+			this.questionsList[3] = new Question("X", "I'm not right.", "I'm not right.", "I'm not right.", "I'm right!", 3);
+
+			this.squares = [];
+			this.squares[0] = new Square(0, "TopLeft", "red");
+			this.squares[1] = new Square(1, "TopRight", "green");
+			this.squares[2] = new Square(2, "BottomLeft", "blue");
+			this.squares[3] = new Square(3, "BottomRight", "orange");
+
+			this.messageBar = new MessageBar();
+		}
+
+		//actual screen display stuff
+		levelTransition(level) {} //TODO: "Level __ up next, take an eye break!" rest of screen is blank
+		thinkyTime(level) {} //TODO: user looks at question and answers for 7 seconds
+		selectyTime(level) {} //TODO: user has 4 seconds to pick an answer
+		endScreen() {} //TODO: display score
+
+		computeScore() {} //TODO
+		dimSquares() {
+			alert("we in dimSquares babey!")
+			this.squares[0].changeColor(E59595);
+		} //TODO
+		brightenSquares() {} //TODO
+
+		setUpLevel(level) {
+			alert("setUpLevel yay");
+			for (var i = 0; i < 4; i++) {
+				
+				var para = document.createElement("div");
+				para.id = "inside" + i;
+				para.classList.add("inside");
+				para.innerHTML = this.questionsList[level].getAnswer(i);
+				var element = document.getElementById(this.squares[i].getDivId());
+				element.appendChild(para);
+				/*
+				document.getElementById(squares[i].getDivId()).innerHTML = questionsList[level].getAnswer(i);
+				*/
+				//document.getElementById(squares[questionsList[level].getCorrectId()].getDivId()).style.borderColor = "black";
+			}
+		}
+	}
+
+	class Question {
+		constructor(q, a1, a2, a3, a4, ca) {
+			this.quest = q; //question string
+			this.answers = []; //array of answer strings
+			this.answers = [a1, a2, a3, a4];
+			this.correctInd = ca; //index of correct answer
+		}
+		getQuestion() {
+			return this.quest;
+		}
+		getAnswer(index) {
+			return this.answers[index];
+		}
+		getCorrectId() {
+			return this.correctInd;
+		}
+		isCorrect(index) {
+			if (index == this.correctInd) {return true;}
+			else {return false;}
+		}
+	}
+
+	class Square {
+		constructor(i, divId, color) {
+			this.index = i;
+			this.divId = divId;
+			this.originalColor = color;
+			this.currentColor = color;
+		}
+		getIndex() {
+			return i;
+		}
+		getDivId() {
+			return this.divId;
+		}
+		changeColor(color) {
+			alert("we in changeColor babey!");
+			this.currentColor = color;
+			document.getElementById(this.divId).style.backgroundColor = "black";
+		}
+		resetColor() {
+			this.currentColor = this.originalColor;
+		}
+	}
+</script>
+</head>
+<BODY>
+	<div class= "bar" id = "questionbar">
+	</div>
+	<div class="squares" id = "4squares" style="display:table; vertical-align:middle; width:100%; height:61%;">
+		<div class="square" id = "TopLeft" style="background-color:F00000;">
+		</div>
+		<div class="square" id = "TopRight" style="background-color:00AA03;">
+		</div>
+		<div class="square" id = "BottomLeft" style="background-color:0066F0;">
+		</div>
+		<div class="square" id = "BottomRight" style="background-color:FFAA00;">
+		</div>
+	</div>
+	<div class= "bar" id = "messagebar">
+	</div>
+</BODY>
+</META>
+</HEAD>
+</HTML>
