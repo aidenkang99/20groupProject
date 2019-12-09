@@ -3,11 +3,12 @@ var x = 0;
 var y = 0;
 function gaze (data, clock) { 
     const delay = 400 // ms
-    x = data.x;
-    y = data.y;
+    thisD.x = data.x;
+    thisD.y = data.y;
 }
 
 window.onload = function() {
+    thisD = new Data(0, 0);
     webgazer.setRegression('ridge') /* currently must set regression and tracker */ 
         .setTracker('clmtrackr') 
         .setGazeListener(gaze) 
