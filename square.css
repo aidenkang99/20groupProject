@@ -1,0 +1,29 @@
+.square{
+    position:relative;
+    font-family:Arial Black;
+    color:white;
+    text-align:center;
+    font-size:60;
+    border-color:white;
+    border-style:solid;
+    border-width:10px;
+    height:47.25%;
+    width:48.58%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float:left;
+}
+.inside{
+    display: inline-block;
+    vertical-align: middle;
+}
+.bar{
+    border-color:white;border-style:solid; vertical-align:center;
+    width:99.5%;
+    height:18%;
+    font-family:Arial Black;
+    color:black;
+    text-align:center;
+    font-size:40;
+}
