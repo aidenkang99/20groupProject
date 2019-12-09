@@ -4,21 +4,21 @@ class GameScreen {
         this.vote = 0; //INTEGER!!!
         this.questionsList = [];
         this.questionsList[0] = new Question("What is 2019’s top song?",
-            "bad guy", "Señorita", "Old Town Road", "Sunflower", 1);
+            "bad guy", "Señorita", "Old Town Road", "Sunflower", 1, false);
         this.questionsList[1] = new Question("What is 2019’s most streamed artist?",
-            "Post Malone", "Billie Eilish", "Ariana Grande", "Drake", 1);
+            "Post Malone", "Billie Eilish", "Ariana Grande", "Drake", 1, false);
         this.questionsList[2] = new Question("What is the most popular SUV purchased in 2019?",
-            "Jeep Wrangler", "Ford Escape", "Nissan Rogue", "Toyota Highlander", 2);
+            "Jeep Wrangler", "Ford Escape", "Nissan Rogue", "Toyota Highlander", 2, false);
         this.questionsList[3] = new Question("What is the most watched Netflix show of 2019?",
-            "Lucifer", "Stranger Things", "Black Mirror", "13 Reasons Why", 1);
+            "Lucifer", "Stranger Things", "Black Mirror", "13 Reasons Why", 1, false);
         this.questionsList[4] = new Question("What is the most widely used programming language of 2019?",
-            "Python", "Java", "JavaScript", "Ruby", 2);
+            "Python", "Java", "JavaScript", "Ruby", 2, false);
         this.questionsList[5] = new Question("What is the most used social networking app of 2019?",
-            "Twitter", "Instagram", "Facebook", "Snapchat", 2);
+            "Twitter", "Instagram", "Facebook", "Snapchat", 2, false);
         this.questionsList[6] = new Question("What is the most populated country as of 2019?",
-            "India", "US", "Brazil", "China", 3);
+            "India", "US", "Brazil", "China", 3, false);
         this.questionsList[7] = new Question("What is the most populated US city as of 2019?",
-            "New York, New York", "Houston, TX", "Chicago, IL", "Los Angeles, CA", 0);
+            "New York, New York", "Houston, TX", "Chicago, IL", "Los Angeles, CA", 0, true);
         this.squares = [];
         this.squares[0] = new Square(0, "TopLeft", "F00000", "E59595");
         this.squares[1] = new Square(1, "TopRight", "00AA03", "78B079");
