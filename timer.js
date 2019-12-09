@@ -22,5 +22,5 @@ class Timer{
                 clearInterval(thisTimer);
             }
         }, 1000);
-    }
+    } //TODO: maybe make something with computeVote here??
 }
