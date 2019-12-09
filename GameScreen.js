@@ -97,8 +97,8 @@ class GameScreen {
            && totalPos.getY() < this.bottomLeft.getBtmRtY() && totalPos.getY() > this.bottomLeft.getTopLftY()) {
             this.vote = 2;
         }
-        else if (totalPos.getX() < this.topLeft.getBtmRtX() && totalPos.getX() > this.topLeft.getTopLftX()
-           && totalPos.getY() < this.topLeft.getBtmRtY() && totalPos.getY() > this.topLeft.getTopLftY()) {
+        else if (totalPos.getX() < this.bottomRight.getBtmRtX() && totalPos.getX() > this.bottomRight.getTopLftX()
+           && totalPos.getY() < this.bottomRight.getBtmRtY() && totalPos.getY() > this.bottomRight.getTopLftY()) {
             this.vote = 3;
         }
         else {
