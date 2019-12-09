@@ -105,6 +105,7 @@ class GameScreen {
         else {
             this.vote = 0;
         }
+        this.gazePosLength = 0;
     }
     computePosition() {
         this.gazePos[gazePosLength] = new Coordinate(data.x, data.y);
