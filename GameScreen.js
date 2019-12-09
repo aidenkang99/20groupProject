@@ -49,7 +49,6 @@ class GameScreen {
         this.topRight = new squarePos(centerX, 0, window.innerWidth, centerY);
         this.bottomLeft = new squarePos(0, centerY, centerX, window.innerHeight);
         this.bottomRight = new squarePos(centerY, centerX, window.innerWidth, window.innerHeight);
-        //TODO: put this into computeVote somehow?
         
         this.messageBar.selectyTime();
         var t1 = new Timer(5, this, 3);
