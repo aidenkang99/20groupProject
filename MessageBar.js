@@ -23,6 +23,6 @@ class MessageBar {
     } //TODO
     increaseScoreboard() {
         this.score += 10;
-		document.getElementById(this.scoreId).innerHTML = "score: " + this.score;
-    }; //TODO
+	document.getElementById(this.scoreId).innerHTML = "score: " + this.score;
+    };
 }
