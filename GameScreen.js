@@ -108,7 +108,8 @@ class GameScreen {
         this.gazePosLength = 0;
     }
     computePosition() {
-        this.gazePos[this.gazePosLength] = new Coordinate(data.x, data.y);
+        this.gazePos[this.gazePosLength] = new Coordinate(
+           x, y);
         this.gazePosLength++;
     }
     dimSquares() {
