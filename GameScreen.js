@@ -28,6 +28,11 @@ class GameScreen {
         
         this.gazePos = [];
         this.gazePosLength = 0;
+
+        this.topLeft;
+        this.topRight;
+        this.bottomLeft;
+        this.bottomRight;
     }
     //actual screen display stuff
     breakTime() {
@@ -49,6 +54,7 @@ class GameScreen {
         this.topRight = new squarePos(centerX, 0, window.innerWidth, centerY);
         this.bottomLeft = new squarePos(0, centerY, centerX, window.innerHeight);
         this.bottomRight = new squarePos(centerY, centerX, window.innerWidth, window.innerHeight);
+        console.log(this.topLeft);
         
         this.messageBar.selectyTime();
         var t1 = new Timer(5, this, 3);
@@ -83,11 +89,9 @@ class GameScreen {
         for (var i = 0; i < this.gazePosLength; i++) {
             totalPos.setX(totalPos.getX() + this.gazePos[i].getX());
             totalPos.setY(totalPos.getY() + this.gazePos[i].getY());
-            console.log("new totalPos coordinates: " + totalPos.getX() + " " + totalPos.getY());
         }
         totalPos.setX(totalPos.getX()/this.gazePosLength);
         totalPos.setY(totalPos.getY()/this.gazePosLength);
-        alert(totalPos.getX() + " " + totalPos.getY());
         if (totalPos.getX() < this.topLeft.getBtmRtX() && totalPos.getX() > this.topLeft.getTopLftX()
            && totalPos.getY() > this.topLeft.getBtmRtY() && totalPos.getY() < this.topLeft.getTopLftY()) {
             alert("0!")
