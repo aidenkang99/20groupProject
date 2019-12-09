@@ -169,16 +169,16 @@ class squarePos {
         this.btmRtY = y;
     }
     getTopLftX() {
-        return topLftX;
+        return this.topLftX;
     }
     getTopLftY() {
-        return topLftY;
+        return this.topLftY;
     }
     getBtmRtX() {
-        return btmRtX;
+        return this.btmRtX;
     }
     getBtmRtY() {
-        return btmRtY;
+        return this.btmRtY;
     }
 }
 class Coordinate {
