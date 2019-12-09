@@ -146,12 +146,6 @@ class GameScreen {
 }
 
 class squarePos {
-    constructor() {
-        this.topLftX;
-        this.topLftY;
-        this.btmRtX;
-        this.btmRtY;
-    }
     constructor(x1, y1, x2, y2) {
         this.topLftX = x1;
         this.topLftY = y1;
