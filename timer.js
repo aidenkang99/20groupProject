@@ -19,6 +19,9 @@ class Timer{
                 else if (stage == 3){
                     gs.responseTime();
                 }
+                else if (stage == 4){
+                    gs.endOrBreak();
+                }
                 clearInterval(thisTimer);
             }
         }, 1000);
