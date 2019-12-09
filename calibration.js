@@ -9,7 +9,6 @@ function gaze (data, clock) {
 }
 
 window.onload = function() {
-    thisD = new Data(0, 0);
     webgazer.setRegression('ridge') /* currently must set regression and tracker */ 
         .setTracker('clmtrackr') 
         .setGazeListener(gaze) 
@@ -19,6 +18,8 @@ window.onload = function() {
     var height = 260;
     var topDist = '0px';
     var leftDist = '0px';
+    
+        thisD = new Data(0, 0);
     
     var setup = function() {
         var video = document.getElementById('webgazerVideoFeed');
