@@ -1,6 +1,10 @@
 var lastHit = 0
+var x;
+var y;
 function gaze (data, clock) { 
     const delay = 400 // ms
+    x = data.x;
+    y = data.y;
 }
 
 window.onload = function() {
