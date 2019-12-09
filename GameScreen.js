@@ -40,9 +40,15 @@ class GameScreen {
         var t1 = new Timer(7, this, 2);
     }
     selectyTime() {
+        //TODO: put in dimensions for all of these
+        var topLeft = new squarePos();
+        var topRight = new squarePos();
+        var bottomLeft = new squarePos();
+        var bottomRight = new squarePos();
+        //TODO: put this into computeVote somehow?
+        
         this.messageBar.selectyTime();
-        this.vote = this.computeVote();
-        var t1 = new Timer(3, this, 3);
+        var t1 = new Timer(5, this, 3);
     }
     responseTime() {
         this.dimFalse();
@@ -66,7 +72,9 @@ class GameScreen {
         document.getElementById("questionbar").innerHTML = "";
         this.messageBar.endGame();
     }
-    computeVote() {return 0;} //TODO (right now it just returns 0) (4 seconds, VOTE IS AN INTEGER)
+    computeVote() {
+        //TODO: finish this function
+        this.vote = 0;} //TODO (right now it just sets this.vote to 0) (VOTE IS AN INTEGER)
     dimSquares() {
         for (var i = 0; i < 4; i++) {
             this.squares[i].dim();
@@ -99,5 +107,40 @@ class GameScreen {
             var element = document.getElementById(this.squares[i].getDivId());
             element.appendChild(para);
         }
+    }
+}
+
+class squarePos() {
+    constructor() {
+        this.topLftX;
+        this.topLftY;
+        this.btmRtX;
+        this.btmRtY;
+    }
+    constructor(x1, y1, x2, y2) {
+        this.topLftX = x1;
+        this.topLftY = y1;
+        this.btmRtX = x2;
+        this.btmRtY = y2;
+    }
+    setTopLft(x, y) {
+        this.topLftX = x;
+        this.topLftY = y;
+    }
+    setBtmRt(x, y) {
+        this.btmRtX = x;
+        this.btmRtY = y;
+    }
+    getTopLftX() {
+        return topLftX;
+    }
+    getTopLftY() {
+        return topLftY;
+    }
+    getBtmLftX() {
+        return btmLftX;
+    }
+    getBtmRtY() {
+        return btmRtY;
     }
 }
