@@ -40,11 +40,12 @@ class GameScreen {
         var t1 = new Timer(7, this, 2);
     }
     selectyTime() {
-        //TODO: put in dimensions for all of these
-        var topLeft = new squarePos();
-        var topRight = new squarePos();
-        var bottomLeft = new squarePos();
-        var bottomRight = new squarePos();
+        var centerX = window.innerWidth * 0.5;
+        var centerY = window.innerHeight * 0.5;
+        var topLeft = new squarePos(0, 0, centerX, centerY);
+        var topRight = new squarePos(centerX, 0, window.innerWidth, centerY);
+        var bottomLeft = new squarePos(0, centerY, centerX, window.innerHeight);
+        var bottomRight = new squarePos(centerY, centerX, window.innerWidth, window.innerHeight);
         //TODO: put this into computeVote somehow?
         
         this.messageBar.selectyTime();
