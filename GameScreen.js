@@ -83,6 +83,7 @@ class GameScreen {
         for (var i = 0; i < this.gazePosLength; i++) {
             totalPos.setX(totalPos.getX() + this.gazePos[i].getX());
             totalPos.setY(totalPos.getY() + this.gazePos[i].getY());
+            console.log("new totalPos coordinates: " + totalPos.getX() + " " + totalPos.getY());
         }
         totalPos.setX(totalPos.getX()/this.gazePosLength);
         totalPos.setY(totalPos.getY()/this.gazePosLength);
@@ -114,9 +115,8 @@ class GameScreen {
         this.gazePosLength = 0;
     }
     computePosition() {
-        alert("coordinate of gaze: " + thisD.x + " " + thisD.y);
-        this.gazePos[this.gazePosLength] = new Coordinate(
-           thisD.x, thisD.y);
+        var c = new Coordinate(thisD.x, thisD.y);
+        this.gazePos.push(c);
         this.gazePosLength++;
     }
     dimSquares() {
