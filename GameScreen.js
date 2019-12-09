@@ -86,19 +86,19 @@ class GameScreen {
         totalPos.setX(totalPos.getX()/this.gazePosLength);
         totalPos.setY(totalPos.getY()/this.gazePosLength);
         if (totalPos.getX() < this.topLeft.getBtmRtX() && totalPos.getX() > this.topLeft.getTopLftX()
-           && totalPos.getY() < this.topLeft.getBtmRtY() && totalPos.getY() > this.topLeft.getTopLftY()) {
+           && totalPos.getY() > this.topLeft.getBtmRtY() && totalPos.getY() < this.topLeft.getTopLftY()) {
             this.vote = 0;
         }
         else if (totalPos.getX() < this.topRight.getBtmRtX() && totalPos.getX() > this.topRight.getTopLftX()
-           && totalPos.getY() < this.topRight.getBtmRtY() && totalPos.getY() > this.topRight.getTopLftY()) {
+           && totalPos.getY() > this.topRight.getBtmRtY() && totalPos.getY() < this.topRight.getTopLftY()) {
             this.vote = 1;
         }
         else if (totalPos.getX() < this.bottomLeft.getBtmRtX() && totalPos.getX() > this.bottomLeft.getTopLftX()
-           && totalPos.getY() < this.bottomLeft.getBtmRtY() && totalPos.getY() > this.bottomLeft.getTopLftY()) {
+           && totalPos.getY() > this.bottomLeft.getBtmRtY() && totalPos.getY() < this.bottomLeft.getTopLftY()) {
             this.vote = 2;
         }
         else if (totalPos.getX() < this.bottomRight.getBtmRtX() && totalPos.getX() > this.bottomRight.getTopLftX()
-           && totalPos.getY() < this.bottomRight.getBtmRtY() && totalPos.getY() > this.bottomRight.getTopLftY()) {
+           && totalPos.getY() > this.bottomRight.getBtmRtY() && totalPos.getY() < this.bottomRight.getTopLftY()) {
             this.vote = 3;
         }
         else {
