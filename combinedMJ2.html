@@ -1,0 +1,259 @@
+<!--combinedMJ.html-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+<TITLE>Mikayla and Jolie WOO</TITLE>
+<link type="text/css" rel="stylesheet" href="calibration.css">    
+<script src="jquery_library.js"></script>
+<script src="./webgazer.js"></script>
+<style>
+	.square{
+		position:relative;
+		font-family:Arial Black;
+		color:white;
+		text-align:center;
+		font-size:60;
+		border-color:white;
+		border-style:solid;
+		border-width:10px;
+		height:47.25%;
+		width:48.58%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		float:left;
+	}
+	.inside{
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.bar{
+		border-color:white;border-style:solid; vertical-align:center;
+		width:99.5%;
+		height:18%;
+		font-family:Arial Black;
+		color:black;
+		text-align:center;
+		font-size:40;
+	}
+</style>
+<script type="text/javascript">
+	//TODO: add gameplay
+	function gameStart(){
+        var gs = new GameScreen();
+		gs.breakTime();
+	}
+	class GameScreen {
+		constructor() {
+			this.level = -1;
+			this.vote = 0; //INTEGER!!!
+			this.questionsList = [];
+			this.questionsList[0] = new Question("What is 2019’s top song?",
+				"bad guy", "Señorita", "Old Town Road", "Sunflower", 1);
+			this.questionsList[1] = new Question("What is 2019’s most streamed artist?",
+				"Post Malone", "Billie Eilish", "Ariana Grande", "Drake", 1);
+			this.questionsList[2] = new Question("What is the most popular SUV purchased in 2019?",
+				"Jeep Wrangler", "Ford Escape", "Nissan Rogue", "Toyota Highlander", 2);
+			this.questionsList[3] = new Question("What is the most watched Netflix show of 2019?",
+				"Lucifer", "Stranger Things", "Black Mirror", "13 Reasons Why", 1);
+			this.questionsList[4] = new Question("What is the most widely used programming language of 2019?",
+				"Python", "Java", "JavaScript", "Ruby", 2);
+			this.questionsList[5] = new Question("What is the most used social networking app of 2019?",
+				"Twitter", "Instagram", "Facebook", "Snapchat", 2);
+			this.questionsList[6] = new Question("What is the most populated country as of 2019?",
+				"India", "US", "Brazil", "China", 3);
+			this.questionsList[7] = new Question("What is the most populated US city as of 2019?",
+				"New York, New York", "Houston, TX", "Chicago, IL", "Los Angeles, CA", 0);
+			this.squares = [];
+			this.squares[0] = new Square(0, "TopLeft", "F00000", "E59595");
+			this.squares[1] = new Square(1, "TopRight", "00AA03", "78B079");
+			this.squares[2] = new Square(2, "BottomLeft", "0066F0", "88B4EF");
+			this.squares[3] = new Square(3, "BottomRight", "FFAA00", "FFDB92");
+			this.messageBar = new MessageBar();
+		}
+		//actual screen display stuff
+		breakTime() {
+			this.level++;
+			document.getElementById("questionbar").innerHTML = "";
+			this.dimSquares();
+            this.messageBar.breakTime(this.level);
+            var t1 = new Timer(5, this, 1);
+		}
+		thinkyTime() {
+			this.setUpLevel(this.level);
+            this.messageBar.thinkyTime();
+            var t1 = new Timer(10, this, 2);
+		}
+		selectyTime() {
+			this.messageBar.selectyTime();
+            this.vote = this.computeVote();
+            var t1 = new Timer(3, this, 3);
+		}
+		responseTime() {
+			this.dimFalse();
+			if (this.questionsList[this.level].isCorrect(this.vote)) {
+				this.messageBar.correctAnswer();
+				this.messageBar.increaseScoreboard();
+			}
+			else {
+				this.messageBar.falseAnswer();
+			}
+		}
+		endScreen() {
+			this.dimSquares();
+			document.getElementById("questionbar").innerHTML = "";
+			this.messageBar.endGame();
+		}
+		computeVote() {return 0;} //TODO (right now it just returns 0) (4 seconds, VOTE IS AN INTEGER)
+		dimSquares() {
+			for (var i = 0; i < 4; i++) {
+				this.squares[i].dim();
+			}
+		}
+		dimFalse() {
+			for (var i = 0; i < 4; i++) {
+				if (i != this.questionsList[this.level].getCorrectAnswer()) {
+					this.squares[i].dim();
+				}
+			}
+		}
+		brightenSquares() {
+			for (var i = 0; i < 4; i++) {
+				this.squares[i].brighten();
+			}
+		}
+		setUpLevel() {
+            document.getElementById("TopLeft").innerHTML = "";
+            document.getElementById("TopRight").innerHTML = "";
+            document.getElementById("BottomLeft").innerHTML = "";
+            document.getElementById("BottomRight").innerHTML = "";
+			document.getElementById("questionbar").innerHTML = this.questionsList[this.level].getQuestion();
+			for (var i = 0; i < 4; i++) {
+                this.squares[i].brighten();
+				var para = document.createElement("div");
+				para.id = "inside" + i;
+				para.classList.add("inside");
+				para.innerHTML = this.questionsList[this.level].getAnswer(i);
+				var element = document.getElementById(this.squares[i].getDivId());
+				element.appendChild(para);
+			}
+		}
+	}
+	class MessageBar {
+		constructor() {
+			this.id = "messagebar";
+		}
+		breakTime(level) {
+			document.getElementById(this.id).innerHTML = "Level " + (level + 1) + " is up next, relax your eyes :)";
+		}
+		thinkyTime() {
+			document.getElementById(this.id).innerHTML = "Decide which answer to vote on now! Your gaze isn't scored yet.";
+			//TODO: make this last for 7 seconds
+		}
+		selectyTime() {
+			document.getElementById(this.id).innerHTML = "Pick your vote by staring at a box. Don't move your eyes."
+		}
+		correctAnswer() {
+			document.getElementById(this.id).innerHTML = "Wahoo! Correct answer!"
+		}
+		falseAnswer() {
+			document.getElementById(this.id).innerHTML = "Ah rats, wrong answer :(";
+		}
+		endGame() {
+			document.getElementById(this.id).innerHTML = "Game over! Thanks for playing :)";
+		} //TODO
+		increaseScoreboard() {}; //TODO
+	}
+	class Question {
+		constructor(q, a1, a2, a3, a4, ca) {
+			this.quest = q; //question string
+			this.answers = []; //array of answer strings
+			this.answers = [a1, a2, a3, a4];
+			this.correctInd = ca; //index of correct answer
+		}
+		getQuestion() {
+			return this.quest;
+		}
+		getAnswer(index) {
+			return this.answers[index];
+		}
+		getCorrectAnswer() {
+			return this.correctInd;
+		}
+		getCorrectId() {
+			return this.correctInd;
+		}
+		isCorrect(index) {
+			if (index == this.correctInd) {return true;}
+			else {return false;}
+		}
+	}
+	class Square {
+		constructor(i, divId, color, dimColor) {
+			this.index = i;
+			this.divId = divId;
+			this.originalColor = color;
+			this.dimColor = dimColor;
+		}
+		getIndex() {
+			return i;
+		}
+		getDivId() {
+			return this.divId;
+		}
+		dim() {
+			document.getElementById(this.divId).style.backgroundColor = this.dimColor;
+		}
+		brighten() {
+			document.getElementById(this.divId).style.backgroundColor = this.originalColor;
+		}
+	}
+</script>
+</HEAD>
+<BODY>
+    <div id="instruction">
+        <p>
+            When a square appears, stare at the square while REPEATEDLY clicking it until it disappears!
+            <br \>
+            <input type="button" id="startButton" value="start" onclick="initiate()">
+        </p>
+    </div>
+    <div id="calibration">
+        <div class="section">
+            <div class="lookHere" id="here0">&nbsp;</div>
+        </div>
+        <div class="section">
+            <div class="lookHere"id="here1">&nbsp;</div>
+        </div>
+        <div class="section">
+            <div class="lookHere"id="here2">&nbsp;</div>
+        </div>
+        <div class="section">
+            <div class="lookHere"id="here3">&nbsp;</div>
+        </div>
+        <div id="timerSlot">
+            <p id="timer">&nbsp;</p>
+        </div>
+    </div>
+    <main style="display:none;">
+        <div class= "bar" id = "questionbar"></div>
+        <div class="squares" id = "4squares" style="display:table; vertical-align:middle; width:100%; height:61%;">
+            <div class="square" id = "TopLeft" style="background-color:F00000;">
+            </div>
+            <div class="square" id = "TopRight" style="background-color:00AA03;">
+            </div>
+            <div class="square" id = "BottomLeft" style="background-color:0066F0;">
+            </div>
+            <div class="square" id = "BottomRight" style="background-color:FFAA00;">
+            </div>
+        </div>
+        <div class= "bar" id = "messagebar">
+        </div>
+    </main>
+</BODY>
+</META>
+<script src="simple.js"></script>
+</HTML>
