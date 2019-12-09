@@ -26,8 +26,11 @@ class Timer{
             }
         }, 1000);
         if (stage == 3){
-            var thisTimer = setInterval(function(){
+            var thatTimer = setInterval(function(){
                 gs.computePosition();
+                if (time <= 0){
+                    clearInterval(thatTimer);
+                }
             }, 10);
         }
     }
