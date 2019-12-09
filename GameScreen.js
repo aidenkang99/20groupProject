@@ -37,7 +37,7 @@ class GameScreen {
     thinkyTime() {
         this.setUpLevel(this.level);
         this.messageBar.thinkyTime();
-        var t1 = new Timer(10, this, 2);
+        var t1 = new Timer(7, this, 2);
     }
     selectyTime() {
         this.messageBar.selectyTime();
