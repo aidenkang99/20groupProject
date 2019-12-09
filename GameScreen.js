@@ -54,6 +54,7 @@ class GameScreen {
         var t1 = new Timer(5, this, 3);
     }
     responseTime() {
+        this.computeVote();
         this.dimFalse();
         if (this.questionsList[this.level].isCorrect(this.vote)) {
             this.messageBar.correctAnswer();
