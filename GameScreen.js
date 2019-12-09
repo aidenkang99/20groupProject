@@ -114,6 +114,7 @@ class GameScreen {
         this.gazePosLength = 0;
     }
     computePosition() {
+        alert("coordinate of gaze: " thisD.x + " " + thisD.x);
         this.gazePos[this.gazePosLength] = new Coordinate(
            thisD.x, thisD.y);
         this.gazePosLength++;
