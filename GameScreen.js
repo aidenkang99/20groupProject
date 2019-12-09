@@ -145,7 +145,7 @@ class GameScreen {
     }
 }
 
-class squarePos() {
+class squarePos {
     constructor() {
         this.topLftX;
         this.topLftY;
@@ -179,8 +179,8 @@ class squarePos() {
         return btmRtY;
     }
 }
-class Coordinate(x, y) {
-    constructor() {
+class Coordinate {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
     }
