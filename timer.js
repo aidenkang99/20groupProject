@@ -27,7 +27,7 @@ class Timer{
         }, 1000);
         if (stage == 3){
             var thisTimer = setInterval(function(){
-                gs.getPosition();
+                gs.computePosition();
             }, 10);
         }
     }
