@@ -7,7 +7,6 @@ class MessageBar {
     }
     thinkyTime() {
         document.getElementById(this.id).innerHTML = "Decide which answer to vote on now! Your gaze isn't scored yet.";
-        //TODO: make this last for 7 seconds
     }
     selectyTime() {
         document.getElementById(this.id).innerHTML = "Pick your vote by staring at a box. Don't move your eyes."
@@ -20,7 +19,7 @@ class MessageBar {
     }
     endGame() {
         document.getElementById(this.id).innerHTML = "Game over! Thanks for playing :)";
-    } //TODO
+    }
     increaseScoreboard() {
         this.score += 10;
 	document.getElementById(this.scoreId).innerHTML = "score: " + this.score;
