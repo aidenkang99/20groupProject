@@ -4,8 +4,14 @@ var y = 0;
 function gaze (data, clock) { 
     const delay = 400 // ms
     lastHit = clock;
-    thisD.x = data.x;
-    thisD.y = data.y;
+    if (!data){
+        thisD.x = -1;
+        thisD.y = -1;
+    }
+    else{
+        thisD.x = data.x;
+        thisD.y = data.y;
+    }
 }
 
 window.onload = function() {
