@@ -3,6 +3,7 @@ var x = 0;
 var y = 0;
 function gaze (data, clock) { 
     const delay = 400 // ms
+    lastHit = clock;
     thisD.x = data.x;
     thisD.y = data.y;
 }
