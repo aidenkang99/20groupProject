@@ -25,6 +25,9 @@ class GameScreen {
         this.squares[2] = new Square(2, "BottomLeft", "0066F0", "88B4EF");
         this.squares[3] = new Square(3, "BottomRight", "FFAA00", "FFDB92");
         this.messageBar = new MessageBar();
+        
+        this.gazePos = [];
+        this.gazePosLength = 0;
     }
     //actual screen display stuff
     breakTime() {
@@ -42,10 +45,10 @@ class GameScreen {
     selectyTime() {
         var centerX = window.innerWidth * 0.5;
         var centerY = window.innerHeight * 0.5;
-        var topLeft = new squarePos(0, 0, centerX, centerY);
-        var topRight = new squarePos(centerX, 0, window.innerWidth, centerY);
-        var bottomLeft = new squarePos(0, centerY, centerX, window.innerHeight);
-        var bottomRight = new squarePos(centerY, centerX, window.innerWidth, window.innerHeight);
+        this.topLeft = new squarePos(0, 0, centerX, centerY);
+        this.topRight = new squarePos(centerX, 0, window.innerWidth, centerY);
+        this.bottomLeft = new squarePos(0, centerY, centerX, window.innerHeight);
+        this.bottomRight = new squarePos(centerY, centerX, window.innerWidth, window.innerHeight);
         //TODO: put this into computeVote somehow?
         
         this.messageBar.selectyTime();
@@ -74,8 +77,37 @@ class GameScreen {
         this.messageBar.endGame();
     }
     computeVote() {
-        //TODO: finish this function
-        this.vote = 0;} //TODO (right now it just sets this.vote to 0) (VOTE IS AN INTEGER)
+        var totalPos = new Coordinate();
+        for (var i = 0; i < this.gazePosLength; i++) {
+            totalPos.setX(totalPos.getX() + this.gazePos[i].getX());
+            totalPos.setY(totalPos.getY() + this.gazePos[i].getY());
+        }
+        totalPos.setX(totalPos.getX()/this.gazePosLength);
+        totalPos.setY(totalPos.getY()/this.gazePosLength);
+        if (totalPos.getX() < this.topLeft.getBtmRtX() && totalPos.getX() > this.topLeft.getTopLftX()
+           && totalPos.getY() < this.topLeft.getBtmRtY() && totalPos.getY() > this.topLeft.getTopLftY()) {
+            this.vote = 0;
+        }
+        else if (totalPos.getX() < this.topRight.getBtmRtX() && totalPos.getX() > this.topRight.getTopLftX()
+           && totalPos.getY() < this.topRight.getBtmRtY() && totalPos.getY() > this.topRight.getTopLftY()) {
+            this.vote = 1;
+        }
+        else if (totalPos.getX() < this.bottomLeft.getBtmRtX() && totalPos.getX() > this.bottomLeft.getTopLftX()
+           && totalPos.getY() < this.bottomLeft.getBtmRtY() && totalPos.getY() > this.bottomLeft.getTopLftY()) {
+            this.vote = 2;
+        }
+        else if (totalPos.getX() < this.topLeft.getBtmRtX() && totalPos.getX() > this.topLeft.getTopLftX()
+           && totalPos.getY() < this.topLeft.getBtmRtY() && totalPos.getY() > this.topLeft.getTopLftY()) {
+            this.vote = 3;
+        }
+        else {
+            this.vote = 0;
+        }
+    }
+    computePosition() {
+        this.gazePos[gazePosLength] = new Coordinate(data.x, data.y);
+        gazePosLength++;
+    }
     dimSquares() {
         for (var i = 0; i < 4; i++) {
             this.squares[i].dim();
@@ -138,10 +170,28 @@ class squarePos() {
     getTopLftY() {
         return topLftY;
     }
-    getBtmLftX() {
-        return btmLftX;
+    getBtmRtX() {
+        return btmRtX;
     }
     getBtmRtY() {
         return btmRtY;
+    }
+}
+class Coordinate(x, y) {
+    constructor() {
+        this.x = x;
+        this.y = y;
+    }
+    getX() {
+        return this.x;
+    }
+    getY() {
+        return this.y;
+    }
+    setX(x) {
+        this.x = x;
+    }
+    setY(y) {
+        this.y = y;
     }
 }
