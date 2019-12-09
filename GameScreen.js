@@ -79,7 +79,7 @@ class GameScreen {
         this.messageBar.endGame();
     }
     computeVote() {
-        var totalPos = new Coordinate();
+        var totalPos = new Coordinate(0, 0);
         for (var i = 0; i < this.gazePosLength; i++) {
             totalPos.setX(totalPos.getX() + this.gazePos[i].getX());
             totalPos.setY(totalPos.getY() + this.gazePos[i].getY());
