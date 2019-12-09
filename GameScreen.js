@@ -53,6 +53,13 @@ class GameScreen {
         else {
             this.messageBar.falseAnswer();
         }
+        //TODO: make invisible timer for a number of seconds
+        if (this.questionsList[this.level].isLast()) {
+            this.endScreen();
+        }
+        else {
+            this.breakTime();
+        }
     }
     endScreen() {
         this.dimSquares();
