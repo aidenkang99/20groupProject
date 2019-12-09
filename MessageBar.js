@@ -21,5 +21,8 @@ class MessageBar {
     endGame() {
         document.getElementById(this.id).innerHTML = "Game over! Thanks for playing :)";
     } //TODO
-    increaseScoreboard() {}; //TODO
+    increaseScoreboard() {
+        this.score += 10;
+		document.getElementById(this.scoreId).innerHTML = "score: " + this.score;
+    }; //TODO
 }
