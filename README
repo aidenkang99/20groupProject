@@ -72,46 +72,88 @@ Design Documentation:
 
 1) Inheritance hierarchy (IS-A)
 
-    Square 
-        - UpperLeft
-        - UpperRight
-        - LowerLeft
-        - LowerRight
-        - Question
-        - Answer (displays "Correct" or "Wrong")
+    Calibration
 
-    NumberWidget
-        - TimerToAnswer
-        - TimerToChoose
-        - TotalScore
+    Coordinate
+        - c
+        - totalPos
+
+    Timer
+        - t1
+
+    squarePos
+        - topLeft
+        - topRight
+        - bottomLeft
+        - bottomRight
+
+    Data
+        - thisD
+    
+    MessageBar
+        - messageBar
+
+    Question
+        - questionsList[]    
+
+    Square 
+        - squares[]
 
 2) Aggregation hierarchy (HAS-A)
 
     Canvas
-        - Square
-            - Text
-            - BackgroundColor (HEX value)
-            - Location
-            - BorderColor (HEX value)
+        - Calibration
+        - GameScreen
+            - Square
+                - Text
+                - BackgroundColor (HEX value)
+                - Location
+                - BorderColor (HEX value)
+                - Height and width
+            - Data
+            - Timer
+            - Coordinate
+            - Question
+            - MessageBar
 
-    NumberWidget
-        - Time (seconds) or Score
-        - BackgroundColor (HEX value)
-        - BorderColor (HEX value)
 
 3) Collaboration Relationships (USES)
 
-    TotalScore object will use results from Square to calculate how much the
-    total score is.
-
-    Each Square for answer choices could use Question Square if we want to
-    make those interconnected.
-
+    GameScreen uses the array values from Question to create Question objects.
+    Then, GameScreen uses array values from Square to create Square objects.
+    Coordinate uses values passed in by GameScreen to compute the coordinate 
+    value. squarePos gets the information passed in by GameScreen to create
+    squarePos objects. Timer uses the values passed in by GameScreen to create 
+    a Timer. Data also uses values passed in by GameScreen to create a Data 
+    object. 
 
 4) Encapsulation
     - The use of Webgazer.js inherently makes how computing eyegaze works
         very encapsulated.
     - When I locate each NumberWidget, I wouldn't have to consider how each
         NumberWidgets operate
+    
+
+Good Aspects of our UI Design:
+
+All in all, we've created a good UI design. At first, we tried to eliminate potential 
+user difficulty by trying to get the mouse to click on its own for calibration. This 
+ended up not working out, but the calibration still works great, and is very intuitive 
+given our directions. The question box at the top of the screen and the message bar at 
+the bottom of the screen has a white background color, which provides some eye relief 
+for the user. In between each question, there is a "eye break" time, where the user is 
+able to rest their eyes for up to 7 seconds. This is crucial to the user's experience 
+while playing this game, because if their eyes were being used for the entirety of the 
+game at all times, they would strain their eyes. Therefore, this relief period is necessary. 
+
+The question is at the top of the screen so the user can easily read the question. 
+The answer boxes are divided up into four sections, and this section takes up most of
+the screen for two reasons. One reason is for accuracy and precision of the answers 
+recorded from the eye gazing. More surface area available to collect data makes the 
+interface more accurate. The other reason is so that the user can see the choices easily 
+and reduce strain on their eyes. The messages displayed to the user to communicate the 
+status of the game, the timer, and the user's score, is at the bottom of the screen. 
+This allows the user to completely rest their eyes during the break period, since the 
+rest of the screen fades during this period. 
     
 
